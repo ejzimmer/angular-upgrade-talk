@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Upgrading Angular</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -20,12 +20,676 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<style>
+			.notes {
+				display: none;
+			}
+
+			body {
+				--blue: hsl(194, 76%, 55%);
+				--red: hsl(21, 100%, 71%);
+			}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>Updating your AngularJS App</h1>
+					<div style="font-size: 2em">(without the tears)</div>
+				</section>
+				<section>
+					<style>
+						#shine-logo {
+							box-shadow: 0 0 80px 10px #3A393B;
+							width: 50%;
+						}
+					</style>
+					<img id="shine-logo" src="images/shine-solutions-logo-dark.png" alt="shine solutions">
+					<div style="align-self: flex-end">lightning bolt</div>
+					<div class="notes">
+						- senior developer & thought leader at Shine Solutions
+						- consulting at a major Australian electricity retailer who decline to be named
+						- which is a shame, because I think we've ended up with something they should be proud of
+					</div>
+				</section>
+
+				<section>
+					<div style="font-family: cursive">A Tale of<br />Two Apps</div>
+				</section>
+
+				<section data-background-image="images/flood-studies.png" data-background-size="contain">
+					<div class="notes">
+							- got my start as a front end dev back in 2014, when I was hired for 
+							a Java developer position in a small government department
+							- Turned out we were actually doing JavaScript (JS specialists weren't really a thing there and then)
+							- Me and three other Java devs 
+							- We wrote terrible Angular
+					</div>
+				</section>
+
+				<section>
+					- controllers 
+					- directives 
+					- services
+					<div class="notes">terrible folder structure</div>
+				</section>
+
+				<section>
+					<img src="images/long-controller.png" alt="">
+				</section>
+
+				<section>
+					<img src="images/no-encapsulation.png" alt="">
+				</section>
+
+				<section>
+					<img src="images/javascript-idioms.png" alt="">
+					<div class="notes">
+						Java devs - not comfortable with dynamic typing or JavaScript idioms
+					</div>
+				</section>
+
+				<section>
+					<img src="images/maven-build.png" alt="">
+					<div class="notes">
+						- lead div not comfortable with Node (it was 2014) so build in Maven
+						- other things like re-inventing the wheel instead of leveraging framework eg routing
+						- it was a bit of a mess
+					</div>
+				</section>
+
+				<section>
+					<h2>It got better</h2>
+					<div class="notes">
+						Angular itself improved 
+						We got some expertise in 
+						Sent devs on secondment
+						Codebase continually improved - kept up to date, componentised etc
+						Decoupled from Java app and moved to Node-based build tools
+					</div>
+				</section>
+
+				<section data-background-image="images/angular.svg" data-background-size="contain">
+					<div class="notes">
+						when Angular 2 came out, this code base was ready for the upgrade path
+					</div> 
+				</section>
+
+				<section>
+					This talk is not about that app. 
+					<div class="notes">
+						There's plenty of info 
+						This talk is about an app with a slightly different story		
+					</div>
+				</section>
+
+				<section>
+					lightning
+					<div class="notes">
+						app that started much like that other app, with people experienced in other languages 
+						crucial difference - never got experienced javascript devs, never had the opportunities to learn that I did
+						kept building in the same style
+						previous examples were actually all from this app
+					</div>
+				</section>
+
+				<section>
+					<ul>
+						<li>Angular 1.4</li>
+						<li>Embedded in JSP</li>
+						<li>Built with Maven</li>
+						<li>Hopeless mess</li>
+					</ul>
+					<div class="notes">
+						in 2018
+					</div>
+				</section>
+
+				<section data-background-image="images/components-dir.png" data-background-size="contain">
+					<div class="notes">
+						98 subdirectories 
+						0 components
+						this app isn't special - there are a tonne of others out there, wallowing in the depths of enterprise
+						what is special is that unnamed electricity company recognised that this was a problem, and decided to do something about
+					</div>
+				</section>
+
+				<section>
+					<h2>Problems</h2>
+					<ol>
+						<li class="fragment highlight-red">Security vulnerabilities</li>
+						<li>Developer experience</li>
+						<li>User experience</li>
+					</ol>
+				</section>
+	
+
+
+
+
+
+
+
+				<section>
+					OWASP Dependency-Check Plugin
+					<div class="notes">
+						- jenkins plug-in
+						- checks Java & JavaScript
+					</div>
+				</section>
+
+				<section>
+					<img src="images/dep-check.png" alt="">
+					<div class="notes">
+						Legion of the Bouncy Castle - who says Java devs are bad at naming things?
+					</div>
+				</section>
+
+				<section>
+					<code>npm audit</code>
+					(output of auditing this project)
+					<code>npm audit fix</code>
+					(how well that worked)
+				</section>
+
+				<section>
+					<ul>
+						<li>6 high severity</li>
+						<li>31 medium severity</li>
+						<li>18 low severity</li>
+					</ul>
+					(just in JavaScript code)
+					mostly XSS vulnerabilities & CSP bypasses, CORS requests able to run, HTML escaping
+				</section>
+
+				<section>
+					EA realised seriousness of having a site full of security vulnerabilities 
+					No more releases with security vulnerabilities
+				</section>
+
+
+				<section>
+					<h2>Problems</h2>
+					<ol>
+						<li>Security vulnerabilities</li>
+						<li class="fragment highlight-green">Developer experience</li>
+						<li>User experience</li>
+					</ol>
+				</section>
+
+				<section>
+					dated codebase
+					-- in ES5
+					-- gulp build just concatenates all the files together - managed manually
+				</section>
+
+				<section>
+					maven
+					<div class="notes">
+						- maven folder structure
+						- JSP
+					</div>
+				</section>
+
+				<section>
+					Everything accounts/ or components/
+					-- impossible to find anything
+
+					files often > 500 lines long 
+					accounts-rpo-controller.js: 1367 lines, single function
+				</section>
+	
+				<section>
+					from readme.md
+					* The Angular application in this project uses:
+						* The [Best Practice Recommendations for Angular App Structure](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md),
+							the only exception being that we have a single module for the application instead of one per
+							directory. This reduces the need to worry about script loading order (although we still need
+							to ensure that the `app.js` file, which declares the `selfService` module, gets loaded first).
+					<div class="notes">
+						-- impossible to test controllers in isolation
+					</div>
+				</section>
+
+				<section>
+					tight coupling
+					-- me as a backend dev at GA
+					-- appCtrl available in all controllers, used functions on that
+					-- also passed controllers between directives, and added and modified data on them
+					-- communication between controllers mostly by passing controllers in and modifying them, or events
+					-- extensive use of ng-include
+				</section>
+
+				<section>
+					devs were too scared to change anything because you never knew what would break 
+					+ inexperienced devs, didn't know how to improve things
+					nobody looking at the big picture
+				</section>
+
+				<section>
+					<h2>Problems</h2>
+					<ol>
+						<li>Security vulnerabilities</li>
+						<li>Developer experience</li>
+						<li class="fragment highlight-green">User experience</li>
+					</ol>
+				</section>
+	
+				<section>
+					originally designed by devs, design looking a bit tacky. 
+					Find an example of something dated to put in. 
+				</section>
+
+				<section>
+					no responsive design.
+					different templates for mobile/desktop. isDesktop()
+					example of how shit it looked on mid-sized devices
+				</section>
+
+				<section>
+					<img src="images/lighthouse.png" alt="">
+				</section>
+
+				<section>
+					<h2>Problems</h2>
+					<ol>
+						<li>Security vulnerabilities</li>
+						<li>Developer experience</li>
+						<li>User experience</li>
+					</ol>
+				</section>
+
+				<section data-background-image="images/We_Can_Do_It.jpg" data-background-size="contain">
+					- support from EA to sort this shit out
+				</section>
+
+				<section>
+					<h1>Security vulnerabilities</h1>
+				</section>
+
+				<section>
+					upgrade all the things!
+					-- every dependency 
+					-- node & npm
+					-- the most difficult: APIs had changed a bit in the previous 4 years
+				</section>
+
+				<section>
+					ui-bootstrap: new API, changed how stylesheets worked?, nasty hacks
+				</section>
+
+				<section>
+					balancing dependency versions - ng-nvd3
+				</section>
+
+				<section>
+					needing to upgrade multiple things at once - PhantomJS/Karma/Jasmine
+				</section>
+
+				<section>
+					<h1>Recommendations</h1>
+				</section>
+
+				<section>
+					Automated test suite
+					-- good unit test coverage 
+					-- tests not coupled to implementation like ours were
+					-- automated integration tests - much harder, flaky tests, visual regression
+				</section>
+
+				<section>
+					Don't try and update everything at once!
+					-- We kind of had to, because everything was so out of date, it would have 
+					taken multiple steps to update one thing at at time
+					-- The best way to avoid this is to not get into this situation in the first place
+				</section>
+
+				<section>
+					Have the build fail on vulnerabilities
+					-- could look into failing as versions get out of support, but that's more 
+					complicated
+					-- only going to work for projects that are under active development
+					-- maybe run builds periodically on a timer
+				</section>
+
+				<section>
+					<h2>Developer experience</h2>
+				</section>
+
+				<section>
+					<ul>
+						<li>Move to modern framework</li>
+						<li>Burn the old codebase in a fire</li>
+					</ul>
+					-- Ideally never touch the old codebase again
+					-- Unfortunately, not entirely feasible
+					-- In the meantime, isolate new code from old as much as possible
+				</section>
+
+				<section>
+					Angular 
+					-- considered other frameworks
+					-- obvious upgrade path
+					-- lots of other apps in Angular, share resources
+				</section>
+
+				<section>
+					<h3>Upgrading with ng-upgrade: preliminary steps</h3>
+				</section>
+
+				<section>
+					Implicit dependencies -> explicit dependencies
+					-- tedious
+					-- can be done bit by bit
+					-- require explicit dependencies to check it's all working
+					-- ideally automate it - we did it bit by bit because the effort
+					required to automate it seemed more effort than it would be to do 
+					it manually (it's not quite simple to automate as requires parsing
+					the code - example)
+					-- I was probably wrong - underestimated the size of the code base
+				</section>
+
+				<section>
+					<h3>Upgrading with ng-upgrade: preparing for TypesScript</h3>
+				</section>
+
+				<section>
+					Need a single entry point to app for TypesScript compiler
+					-- our code was manually concatenting files via gulp
+					-- need to convert to imported modules
+					-- luckily, code doesn't need to be written as modules to be imported
+				</section>
+
+				<section>
+					Import our code
+					lecacy-imports.ts
+						import './login-agent/login-agent-controller';
+						import './registration/registration-controller';
+						import './notification/notification-service';
+						import './notification/notification-controller';
+						import './notification/notification-details/notification-details-controller';
+						import './health/health-controller';
+						import './admin/admin-controller';
+						import './agent/agent-controller';
+						import './introtour/intro-service';
+						...
+
+					-- need an import for every file in your app 
+					-- this one can be automated - find + regex
+				</section>
+
+				<section>
+					Import other Angular module dependencies
+					legacy-app.ts
+import 'angular'
+import 'jquery';
+import 'angular';
+import 'matchmedia-ng';
+import 'angular-shims-placeholder';
+import 'angular-animate';
+import 'angular-sanitize';
+import 'angular-touch';
+import 'angular-aria';
+import 'angular-cookies';
+import 'ng-csv';
+import 'ng-idle';
+import 'ng-joyride';
+
+				</section>
+
+				<section>
+					And set up angular module
+export const selfServiceModule = angular
+  .module('selfService', [
+    'angularPayments',
+    'matchmedia-ng',
+    'ng.shims.placeholder',
+    'ngAnimate',
+    'ngAria',
+    'ngCookies',
+    'ngCsv',
+    'ngIdle',
+    'ngJoyRide',
+    'ngSanitize',
+    'ngTouch',
+				</section>
+
+				<section>
+					TypeScript doesn't like random globals, so declare angular 
+					declare const angular: any;
+				</section>
+
+				<section>
+					Set up the entry point
+					app.ts
+
+					import { selfServiceModule } from './legacy-app';
+					import './legacy-imports';
+					selfServiceModule
+					.config(['$compileProvider', $compileProvider => $compileProvider.aHrefSanitizationWhitelist(/^(https?|mailto|tel)/)])
+					.config([... 
+					
+					recommend: do this bit and switch from gulp concatenation to compilation by tsc
+				</section>
+
+				<section>
+					try and compile - at this point a bunch of stuff will probably break
+					script tags with globals -> import them
+				</section>
+
+				<section>
+					Moving from gulp to Typescript means losing a bunch of gulp plugins - 
+					especially ng-template plugin. Need to manually populate the template cache
+				</section>
+
+				<section>
+					legacy-templates.ts
+					-- wouldn't use this approach in a new app as you'd need to manually add templates as new components were built
+					-- in our case, we can just add the templates once, so it's ok
+					-- Can be automated. yay!
+				</section>
+
+				<section>
+					Problems with tests I
+					- couldn't transpile tests due to dependency nightmare of single module + 
+					no es5 modules
+					- means we couldn't use import statements in anything we wanted to test
+
+					Possible solutions, used here and previously
+					- don't run the tests. You're not planning to change this code anyway
+					- don't run the tests on those files. Reduce risk.
+					- don't import things. service hack.
+				</section>
+
+				<section>
+					Problems with Tests II
+					- requests for templates
+					- make sure to add templates to template cache 
+					- I didn't automate this, but you should be able to
+				</section>
+
+				<section>
+					<h3>Upgrading with ng-upgrade: setting up Angular CLI app</h3>
+					-- the fun bit!
+					-- if you have a normal app structure, you can just ng new and away
+				</section>
+
+				<section>
+					Maven & JSPs
+					-- index.html is served by index.jsp
+					-- the project structure is set up for Java development
+
+					=> Move index.jsp to index.html 
+				</section>
+
+				<section>
+					<h4>Angular CLI project structure is configurable... kind of</h4>
+				</section>
+
+				<section>
+					angular.json
+					"self-service-app": {
+            "root": "",
+            "sourceRoot": "self-service-app/src/main/webapp/src",
+            "projectType": "application",
+            "prefix": "app",
+            "schematics": {},
+            "targets": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "self-service-app/src/main/webapp/dist/self-service-app",
+                        "index": "self-service-app/src/main/webapp/src/index.html",
+                        "main": "self-service-app/src/main/webapp/src/main.ts",
+                        "polyfills": "self-service-app/src/main/webapp/src/polyfills.ts",
+                        "tsConfig": "self-service-app/src/main/webapp/src/tsconfig.app.json",
+                        "assets": [
+                            "self-service-app/src/main/webapp/src/favicon.ico",
+                            "self-service-app/src/main/webapp/src/assets",
+                            "self-service-app/src/main/webapp/src/reference-data"
+                        ],
+                        "styles": ["self-service-app/src/main/webapp/src/styles.scss"],
+                        "scripts": ["node_modules/angular/angular.js", "node_modules/jquery/dist/jquery.min.js"]
+					-- generation doesn't work properly - puts things in current folder
+				</section>
+
+				<section>
+					<h4>JSP to HTML</h4>
+					-- another nasty bit
+					-- configuration injected into JSP
+					-- hacks & the downsides (code in index.html, late loaded scripts)
+				</section>
+
+				<section>
+					<h3>Upgrading with ng-upgrade: bootstrapping the new app</h3>
+					-- remove ng-app
+					-- bootstrap in app.ts
+					platformBrowserDynamic().bootstrapModule(AppModule).then((platformRef) => {
+						const upgrade = platformRef.injector.get(UpgradeModule) as UpgradeModule;
+						upgrade.bootstrap(document.getElementById('legacy-app'), [ LegacyModule.name ], { strictDi: true });
+					});					
+				</section>
+
+				<section>Congratulations, your app should now run</section>
+
+				<section>
+					Things to remember 
+					-- replace your gulp plugins with explicit dependencies and template cache
+					-- create a single entry point for tsc and import all yer dependencies
+					-- tests. a problem.
+					-- configure ng-cli to deal with your project setup
+					-- bootstrap from Angular main.ts
+				</section>
+
+				<section>
+					<h3>Developing a hybrid app</h3>
+				</section>
+
+				<section>
+					<h4>Using new Angular components in your old AngularJS pages</h4>
+					-- downgrade.
+					-- easy as pie.
+					-- don't forget entry components
+				</section>
+
+				<section>
+					<h4>Using old AngularJS services in your new Angular components & services</h4>
+					-- upgrade.
+					-- also quite easy.
+					-- mocking for tests is a bit trickier
+				</section>
+
+				<section>
+					<h4>Using new Angular services in old AngularJS services etc</h4>
+					-- downgrade 
+					-- straightforward
+					-- less common use case
+				</section>
+
+				<section>
+					<h4>Using old Angular directives/components in new Angular components</h4>
+					-- need to upgrade 
+					-- will work for components 
+					-- will also work for directives that could be components - elements only, isolated scope etc
+					ss-accesible icon example?
+				</section>
+
+				<section>
+					-- downgrade component - tick 
+					-- upgrade service - tick-ish 
+					-- downgrade service - tick 
+					-- upgrade directive - tick-ish
+				</section>
+
+				<section>
+					<ul>
+						<li>security - tick</li>
+						<li>developer experience - tick</li>
+						<li>user experience</li>
+					</ul>
+					-- haven't done anything to make the app actually any better 
+					-- our analytics showed that it was no slower to load though
+				</section>
+
+				<section>
+					<h2>Our plan for the future </h2>
+				</section>
+
+				<section>
+					app is built around a hub & spoke model - central dashboard page + supporting pages
+					easy to separate out into independent units
+					also undertaking a redesign, giving us the opportunity to touch a lot of pages
+				</section>
+
+				<section>
+					New repo using nrwl nx
+					Any new pages go in the new repo. Updates to existing pages go in the old repo.
+					Idea is to eventually move everything from the old repo to the new one.
+				</section>
+
+				<section>
+					Each new page (or collection of related pages) is its own app in the new repo 
+					Shared library for common servies and components 
+					Also component library and ng-self-service, all nx repos
+				</section>
+
+				<section>
+					Pages can be developed independently, nicely encapsulated, potentially used in 
+					other apps. Some make sense as standalone, some as links from old app.
+					Ensure a common Angular version + shared dependencies.
+					Apps always built and deployed together - no versioning
+				</section>
+
+				<section>
+					communication between microfront ends
+				</section>
+
+				<section>
+					what we've found so far
+				</section>
+
+				<section>
+					<h2>Summary</h2>
+				</section>
+
+				<section>
+					It is vital that you upgrade any apps running < Angular 1.7, due to security concerns
+					This can be tricky, due to versions of dependencies, so try to do it soon and often
+				</section>
+
+				<section>
+					You should be looking at a path away from AngularJS altogether as it will go out of support
+					30/6/2021. which is not as far away as it sounds.
+					ng-upgrade offers a path to do this incrementally, even if your app isn't componentised 
+					with minimal hits to performance
+				</section>
+
+				<section>
+					exciting opportunities around new ways of building angular apps, potentially combining
+					micro front ends built in different frameworks and web components woop
+				</section>
 			</div>
 		</div>
 
@@ -37,6 +701,11 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+				controls: false,
+				history: true,
+				display: 'flex',
+				progress: false,
+				center: false,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
