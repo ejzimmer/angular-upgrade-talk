@@ -41,8 +41,12 @@
 			}
 
 			body {
-				--blue: hsl(194, 76%, 55%);
+				--blue-hue: 194;
+				--blue: hsl(var(--blue-hue), 76%, 55%);
+				--background-blue: hsl(var(--blue-hue), 50%, 80%);
 				--red: hsl(21, 100%, 71%);
+				--green-hue: 120;
+				--green: hsl(var(--green-hue), 70%, 71%);
 			}
 			.reveal .slides > section.present.horizontal, 
 				.reveal .slides > section > section.present.horizontal,
@@ -50,12 +54,17 @@
 				flex-direction: row;
 				justify-content: flex-start;
 			}
+			.reveal .slides > section.present.top-align,
+				.reveal .slides > section > section.present.top-align,
+				.reveal .slides section.top-align {
+					justify-content: flex-start;
+				}
 
 			.reveal *.problem {
 				color: var(--red);
 			}
 			.reveal *.solution {
-				color: var(--blue);
+				color: var(--green);
 			}
 
 			.reveal section code, .reveal section .text {
@@ -85,7 +94,59 @@
 				background-color: rgba(3, 3, 3, .2);
 				padding: .8em;
 				border-radius: 5px;
-			}			
+			}
+
+			.fragment.highlight-blue.visible .hljs-string,
+					pre code .fragment.highlight-blue.visible {
+				color: var(--blue);
+				background: var(--background-blue);
+			}
+
+			.reveal .slides section .fragment.dim, .reveal .slides section .fragment.strikethrough {
+				opacity: 1;
+				visibility: inherit;
+			}
+			.reveal .slides section .fragment.dim.visible * {
+				transition: all .2s ease;
+			}
+			.reveal .slides section .fragment.dim.visible *:not(.hljs-params) {
+				opacity: .5;
+			}
+			.reveal .slides section pre code.fragment.dim.visible {
+				color: hsla(0, 0%, 86%, .5);
+			}
+			.reveal .slides section .fragment.dim .fragment {
+				visibility: inherit;
+				opacity: inherit;
+			}
+			.reveal .slides section .fragment.dim .fragment.current-fragment,
+				.reveal .slides section .fragment.dim .fragment.current-fragment .hljs-attribute,
+				.reveal .slides section .fragment.dim .fragment.current-fragment .hljs-string,
+				.reveal .slides section .fragment.dim .fragment.current-fragment .hljs-params {
+				color: var(--blue);
+				opacity: 1;
+			}
+			.reveal .slides section .fragment.visible.strikethrough {
+				text-decoration: line-through;
+			}
+
+			.reveal section ul {
+				list-style-type: '\1F449';
+			}
+
+			.reveal section ul li {
+				padding-left: .5em;
+			}
+
+			.right-arrow::after {
+				content: '->';
+				font-family: fira;
+			}
+
+			img.contrast {
+				filter: drop-shadow(2px 2px 3px hsla(0, 0%, 100%, .4))
+			}
+
 		</style>
 	</head>
 	<body>
@@ -94,16 +155,21 @@
 				<section>
 					<h1>Updating your AngularJS App</h1>
 					<div style="font-size: 2em">(without the tears)</div>
+
+					<div class="notes">
+						AngularJS vs Angular
+					</div>
 				</section>
 				<section>
 					<style>
 						#shine-logo {
 							box-shadow: 0 0 80px 10px #3A393B;
 							width: 50%;
+							padding-right: 40%;
 						}
 					</style>
 					<img id="shine-logo" src="images/shine-solutions-logo-dark.png" alt="shine solutions">
-					<img src="images/OzEnergy.png" />
+					<img src="images/OzEnergy.png" style="margin-left: 50%" />
 					<div class="notes">
 						- senior developer & thought leader at Shine Solutions
 						- consulting at a major Australian electricity retailer who decline to be named
@@ -111,45 +177,19 @@
 					</div>
 				</section>
 
-				<!-- <section>
-					<div style="font-family: cursive">A Tale of<br />Two Apps</div>
-				</section> -->
-
-				<!-- <section data-background-image="images/flood-studies.png" data-background-size="contain">
-					<div class="notes">
-							- got my start as a front end dev back in 2014, when I was hired for 
-							a Java developer position in a small government department
-							- Turned out we were actually doing JavaScript (JS specialists weren't really a thing there and then)
-							- Me and three other Java devs 
-							- We wrote terrible Angular
-					</div>
-				</section>
-
 				<section>
-					<div>- controllers</div>
-					<div>- directives</div>
-					<div>- services</div>
-					 
-					
-					
-					<div class="notes">terrible folder structure</div>
-				</section> -->
-
-				<section>
-					<ul>
+					<ul class="pointers">
 						<li>Angular 1.4</li>
 						<li>Embedded in JSP</li>
 						<li>Built with Maven</li>
 						<li>Hopeless mess</li>
 					</ul>
 					<div class="notes">
-						in 2018
-						this app isn't special - there are a tonne of others out there, wallowing in the depths of enterprise
-						what is special is that unnamed electricity company recognised that this was a problem, and decided to do something about
+						- suffered from similar problems to many legacy enterprise apps - devs whose experience isn't in JavaScript
+						- incredibly common
 					</div>
 				</section>
 	
-
 				<section>
 					<img src="images/long-controller.png" alt="">
 				</section>
@@ -161,68 +201,22 @@
 				<section>
 					<img src="images/javascript-idioms.png" alt="">
 					<div class="notes">
-						Java devs - not comfortable with dynamic typing or JavaScript idioms
+						What was special: EA recognised issue and decided to fix it
 					</div>
 				</section>
-
-				<!-- <section>
-					<img src="images/maven-build.png" alt="">
-					<div class="notes">
-						- lead div not comfortable with Node (it was 2014) so build in Maven
-						- other things like re-inventing the wheel instead of leveraging framework eg routing
-						- it was a bit of a mess
-					</div>
-				</section> -->
-
-				<!-- <section>
-					<h2>It got better</h2>
-					<div class="notes">
-						Angular itself improved 
-						We got some expertise in 
-						Sent devs on secondment
-						Codebase continually improved - kept up to date, componentised etc
-						Decoupled from Java app and moved to Node-based build tools
-					</div>
-				</section>
-
-				<section data-background-image="images/angular.svg" data-background-size="contain">
-					<div class="notes">
-						when Angular 2 came out, this code base was ready for the upgrade path
-					</div> 
-				</section>
-
-				<section>
-					This talk is not about that app. 
-					<div class="notes">
-						There's plenty of info 
-						This talk is about an app with a slightly different story		
-					</div>
-				</section> -->
-<!-- 
-				<section>
-					lightning
-					<div class="notes">
-						app that started much like that other app, with people experienced in other languages 
-						crucial difference - never got experienced javascript devs, never had the opportunities to learn that I did
-						kept building in the same style
-						previous examples were actually all from this app
-					</div>
-				</section> -->
-
 
 				<section>
 					<h2>Problems</h2>
 					<ol>
 						<li>Security vulnerabilities</li>
 						<li>Bad developer experience</li>
-						<li>Bad user experience</li>
 					</ol>
 				</section>
 
-				<section>
+				<section data-background-image="images/jail-cell.jpg">
 					<h2 class="problem">Security Vulnerabilities</h2>
 					<div class="notes">
-						The scariest of the three issues
+						Brad to business - data breaches & $$
 					</div>
 				</section>
 
@@ -242,53 +236,16 @@
 					</div>
 				</section>
 
-				<!-- <section>
-					<img src="images/dep-check.png" alt="">
-					<div class="notes">
-						Creates a report something like this
-						Legion of the Bouncy Castle - who says Java devs are bad at naming things?
-						This was handy as we needed to scan both Java & JavaScript
-					</div>
-				</section> -->
-
 				<section>
-						<code>npm audit</code>
-					</section>
-	
-					<!-- <section>
-						<pre>
-	
-=== npm audit security report ===
-
-# Run  npm install --save-dev socket.io@2.2.0  to resolve 9 vulnerabilities
-SEMVER WARNING: Recommended action is a potentially breaking change
-┌───────────────┬──────────────────────────────────────────────────────────────┐
-│ Low           │ Regular Expression Denial of Service                         │
-├───────────────┼──────────────────────────────────────────────────────────────┤
-│ Package       │ debug                                                        │
-├───────────────┼──────────────────────────────────────────────────────────────┤
-│ Dependency of │ socket.io [dev]                                              │
-├───────────────┼──────────────────────────────────────────────────────────────┤
-│ Path          │ socket.io > debug                                            │
-├───────────────┼──────────────────────────────────────────────────────────────┤
-│ More info     │ https://npmjs.com/advisories/534                             │
-└───────────────┴──────────────────────────────────────────────────────────────┘
-...
-
-found 9 vulnerabilities (8 low, 1 high) in 2453 scanned packages
-	9 vulnerabilities require semver-major dependency updates.
-					</pre>
-					<div class="notes">
-						this probably enough for projects being actively developed 
-						for stale projects - have a scan run regularly with an alarm. it's 2019. automated scans shouldn't be hard.
-					</div>
+					<code>npm audit</code>
+					<div class="notes">npm v6</div>
 				</section>
-	 -->
+
 				<section>
 					<ul>
-						<li>6 high severity</li>
-						<li>31 medium severity</li>
-						<li>18 low severity</li>
+						<li style="list-style-type: '😳'">6 high severity</li>
+						<li style="list-style-type: '😧'">31 medium severity</li>
+						<li style="list-style-type: '😕'">18 low severity</li>
 					</ul>
 					<div class="notes">
 						(just in JavaScript code)
@@ -300,7 +257,7 @@ found 9 vulnerabilities (8 low, 1 high) in 2453 scanned packages
 					</div>
 				</section>
 	
-				<section>
+				<section data-background-image="images/locked-jailcell.jpg" data-state="dim">
 					<h2 class="solution">Improved Security</h2>
 				</section>
 
@@ -410,22 +367,11 @@ expect(phone.label).toBe('Mobile (2)');
 					</div>
 				</section>
 
-				<!-- <section>
-					<h2>Security</h2>
-					<ul>
-						<li>Have good tests</li>
-						<li>Don't upgrade everything at once</li>
-						<li>Break the build</li>
-					</ul>
-					<div class="notes">
-						not just lots of tests - the right kind of tests
-					</div>
+				<section>
+					<img style="width: 80vw;" class="contrast"  src="images/sonarqube.png">
 				</section>
 
-				<section>celebratory puppies</section> -->
-						
-
-				<section>
+				<section data-background-image="images/crying.jpg" data-state="dim">
 					<h2 class="problem">Terrible Developer Experience</h2>
 					<div class="notes">
 						Can't have a good app if we don't have good devs 
@@ -520,19 +466,23 @@ carbon-neutral                 icon                           profile</span>
 					</code></pre>
 				</section>
 
-				<section data-background-image="images/entanglement.jpg">
-					<div class="attribution">@emontgomery</div>
+				<section>
+					<div class="text">Everything in global state</div>
 				</section>
 
-				<section>
+				<section data-background-image="images/birthday.jpg" data-state="dim">
 					<h2 class="solution">Better Developer Experience</h2>
 				</section>
 
 				<section>
 					<ul>
-						<li class="fragment">Move to modern framework</li>
-						<li class="fragment">🔥Burn the old codebase in a fire 🔥</li>
+						<li style="list-style-type: none" class="fragment">🏗️Move to modern framework🏗️</li>
+						<li style="list-style-type: none" class="fragment">🔥Burn the old codebase in a fire 🔥</li>
 					</ul>
+					<div class="notes">
+						You should be looking at a path away from AngularJS altogether as it will go out of support
+						30/6/2021. which is not as far away as it sounds.
+					</div>
 				</section>
 
 				<section>
@@ -550,6 +500,7 @@ carbon-neutral                 icon                           profile</span>
 						<img src="images/Vue-logo.svg" style="grid-row: 2 / 4; height: 80%">
 					</div>
 				</section>
+	
 
 				<section>
 					<img src="images/angular.svg" alt="">		
@@ -637,7 +588,7 @@ carbon-neutral                 icon                           profile</span>
 				</section>
 
 				<section>
-					<ul>
+					<ul class="text">
 						<li class="complete">Valid HTML</li>
 						<li class="fragment highlight-blue">Explicit dependencies</li>
 					</ul>
@@ -647,11 +598,11 @@ carbon-neutral                 icon                           profile</span>
 				</section>
 	
 				<section>
-					<pre><code>
+					<pre><code data-noescape>
 var myService = [
- '$http', 
- '$q', 
- function ($http, $q) { ... } 
+ <span class="fragment highlight-blue">'$http', 
+ '$q',</span>
+ function (<span class="fragment highlight-blue">$http, $q</span>) { ... } 
 ];
 					</code></pre>
 					<div class="notes">
@@ -668,11 +619,33 @@ var myService = [
 				</section>
 
 				<section>
-					<h2>Use explicit annotation</h2>
+						<pre><code class="fragment strikethrough" data-fragment-index="0">
+var myService = [
+  '$http', 
+  '$q',
+  function ($http, $q) { ... } 
+];</code></pre>
+						<pre><code class="fragment" data-fragment-index="0">
+var myService = 
+	function ($http, $q) { ... } 
+						</code></pre>
+																							
+				</section>
+
+				<section>
+					<h2>Manual annotation</h2>
 					<div class="notes">
 						-- bit inconvenient, but the idea here is that we're not going to write AngularJS code going forward
 						-- run ng-annotate against your source files, rather than build files
 					</div>
+				</section>
+
+				<section>
+					<div>source files <span class="right-arrow"></span> built file <span class="right-arrow"></span> annotated built file</div>
+				</section>
+
+				<section>
+					source files 🔄 annotated files 
 				</section>
 
 				<section>
@@ -699,8 +672,8 @@ var myService = [
 					</div>
 				</section>
 
-				<section>
-					<h3 class="solution">Setup ES Modules</h3>
+				<section data-background-image="images/shipping-containers.jpeg" data-state="dim">
+					<h3>Setup ES Modules</h3>
 				</section>
 
 				<section>
@@ -768,6 +741,7 @@ import 'spin.js';
 						-- don't know of any easy way to automate this as node-modules aren't consistent in naming 
 						-- IDE might autocomplete for you
 						-- hopefully you don't have too many dependencies...
+						-- we were lucky - almost all our dependencies were dependencies of our single Angular module
 						-- also need to import all your app files
 					</div>
 				</section>
@@ -800,9 +774,17 @@ import './components/scroll-to-top/scroll-to-top-service';
 					</div>
 				</section>
 
-				<section>
+				<section data-background-image="images/station-gates.jpg" data-state="dim">
 					<h3 class="solution">Create TypeScript Entry Point</h3>
 				</section>
+
+				<section>
+						<pre><code>	
+angular.module('selfService', 
+  [ 'ui-bootstrap', ... ]);
+						</code></pre>
+					</section>
+	
 
 				<section>
 					<code>app.js -> app.ts</code>
@@ -824,7 +806,7 @@ angular.module('selfService',
 					</div>
 				</section>
 
-				<section>
+				<section data-background-image="images/angular-cli.png" data-state="dim">
 					<h2>Angular CLI</h2>
 				</section>
 
@@ -889,16 +871,260 @@ angular.module('selfService',
 
 				<section>
 					<code class="bash">ng generate component myNewComponent</code>
+					<div class="notes">
+						At this point, you can just follow the standard Angular upgrade instructions.
+					</div>	
+				</section>
+
+				<section data-background-image="images/geometry.jpg" data-background-position="top" data-state="dim">
+					<h3>Writing Angular</h3>
+					<div class="notes">
+						check the documentation for how to actually do it
+					</div>
 				</section>
 
 				<section>
-					<ul>
-						<li class="fragment">Out of date code is a security risk</li>
-						<li class="fragment">Good tests are vital</li>
-						<li class="fragment">Bash is your friend</li>
+					<ul style="list-style-type: '\2705'">
+						<li>Angular component in AngularJS</li>
+						<li>AngularJS service in Angular</li>
+						<li>Angular service in AngularJS</li>
+						<li style="list-style-type: '\1F937'">AngularJS directive in Angular</li>
 					</ul>
 				</section>
 
+				<section>
+					You can upgrade your directive<br> if it could be a component
+				</section>
+
+				<section>
+						<pre><code class="js" style="font-size: 1">angular.component('my-legacy-component', 
+			function () {...})</code></pre>
+				</section>
+	
+				<section>
+					<ul>
+						<li class="fragment"><code style="font-size: inherit">restrict: 'E'</code></li>
+						<li class="fragment">controller & template</li>
+						<li class="fragment">isolate scope</li>
+						<li class="fragment"><code style="font-size: inherit;">bindToController</code></li>
+						<li class="fragment">NO <code style="font-size: inherit">compile</code> or <code style="font-size: inherit">replace</code></li>
+					</ul>
+				</section>
+
+				<section data-background-image="images/test.jpg" data-state="dim">
+					<h2>Testing</h2>
+					<div class="notes">
+						we had some issues getting our old tests to work under new build system
+						- previously testing entire built application
+						- now testing individual files, because TypeScript + karma = sadface
+					</div>
+				</section>
+
+				<section>
+					<h3>Do you really need<br> AngularJS tests?</h3>
+				</section>
+
+
+				<section data-background-image="images/New_New_York_Cityscape.webp" data-state="dim">
+					<h2>The future</h2>
+					<div class="notes">
+						So we've moved to a new framework, how are we planning to burn the old codebase in a fire?
+					</div>
+				</section>
+
+				<section>
+					<h2>microfrontends</h2>
+					<img src="images/nx-logo.png" class="contrast" style="width: 50vw">
+				</section>
+
+				<section data-transition="fade-out">
+					<style>
+						#old-dashboard .box, #new-dashboard .box {
+							stroke: #333;
+							fill: none;
+							stroke-width: .25;
+						}
+						#old-dashboard .accordion {
+							stroke: none;
+						}
+						.link {
+							fill: none;
+							stroke-width: .5;
+							stroke: hsl(100, 70%, 60%);
+						}
+						.link:nth-last-of-type(-n + 4) {
+							stroke: green;
+						}
+						.link.current {
+							stroke: red;
+						}
+					</style>
+					<div>
+						<div style="display: grid; grid-template-columns: 1fr 1fr"><h3>Hybrid app</h3><h3>Nx app</h3></div>
+
+						<svg viewBox="0 0 200 120">
+							<use xlink:href="#old-dashboard" x="35" y="1" />
+							<rect class="accordion fragment" data-fragment-index="2" width="27" height="5" rx="2" ry="2" x="36.5" y="33.5" fill="url('#my-account-gradient')"; />
+							<use xlink:href="#new-dashboard" class="fragment" data-fragment-index="4" x="135" y="1" />
+
+							<use xlink:href="#child-page" x="2" y="50" class="fragment" data-fragment-index="0" />
+							<use xlink:href="#child-page" x="35" y="70" class="fragment" data-fragment-index="0" />
+							<use xlink:href="#child-page" x="68" y="55" class="fragment" data-fragment-index="0" />
+							<path class="link fragment" d="M38,19 C30,18 10,10 16,52" marker-end="url(#arrow-head)" data-fragment-index="0"/>
+							<path class="link fragment" d="M38,25 C35,24 10,20 43,72" marker-end="url(#arrow-head)" data-fragment-index="0"/>
+							<path class="link fragment" d="M61,31 C60,30 85,25 83,57" marker-end="url(#arrow-head)" data-fragment-index="0"/>
+
+							<use xlink:href="#child-page" x="105" y="62" class="fragment" data-fragment-index="1" />
+							<path class="link fragment" d="M61,36 C65,36 95,16 107,64" marker-end="url(#arrow-head)" data-fragment-index="2"/>
+
+							<path class="link fragment" d="M138,5 C30,5 20,10 16,52" marker-end="url(#arrow-head)" data-fragment-index="5" />
+							<path class="link fragment" d="M140,7 C100,24 50,20 43,72" marker-end="url(#arrow-head)" data-fragment-index="5"/>
+							<path class="link fragment" d="M138,25 C130,25 85,25 83,57" marker-end="url(#arrow-head)" data-fragment-index="5"/>
+							<path class="link fragment" d="M140,30 C140,30 106,30 107,64" marker-end="url(#arrow-head)" data-fragment-index="5"/>
+
+							<line x1="99.5" y1="0" x2="100.5" y2="120" stroke="currentColor" stroke-width="1" />
+							<image class="fragment" data-fragment-index="3" xlink:href="images/cookie.png" width="40" height="20" x="80" y="20" />
+
+							<defs>
+								<g id="old-dashboard">
+									<use xlink:href="#page" />
+									<rect class="box" width="12" height="10" x="2" y="3" />
+									<rect class="box" width="12" height="10" x="16" y="3" />
+									<rect class="accordion" width="27" height="5" rx="2" ry="2" x="1.5" y="16" fill="url('#my-account-gradient')"; />
+									<rect class="accordion" width="27" height="5" rx="2" ry="2" x="1.5" y="21.5" fill="url('#my-account-gradient')"; />
+									<rect class="accordion" width="27" height="5" rx="2" ry="2" x="1.5" y="27" fill="url('#my-account-gradient')"; />
+								</g>
+								<g id="new-dashboard">
+									<use xlink:href="#page" />
+									<rect class="box" width="27" height="6" x="1.5" y="1.5" rx=".5" ry=".5" />
+									<rect class="box" width="27" height="6" x="1.5" y="8.5" rx=".5" ry=".5" />
+									<rect width="30" height="4"  y="16" fill="green" />
+									<rect class="box" width="12.5" height="14" x="1.5" y="22" rx=".5" ry=".5" />
+									<rect class="box" width="12.5" height="14" x="15.5" y="22" rx=".5" ry=".5" />
+								</g>
+
+								<g id="child-page">
+									<use xlink:href="#page" />
+									<image xlink:href="images/OzEnergy.png" width="25" height="15" y="10" x="2" />
+								</g>
+								<rect id="page" width="30" height="40" stroke-width=".5" fill="white" stroke="grey" />
+	
+								<linearGradient id="my-account-gradient" gradientTransform="rotate(90)">
+									<stop offset="20%" stop-color="#7fbe37" />
+									<stop offset="90%" stop-color="#59a920" />
+								</linearGradient>
+
+								<marker id="arrow-head" markerWidth="12" markerHeight="12" refX="0" refY="3" orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
+									<path d="M0,0 L0,6 L9,3 z" fill="hsl(100, 70%, 60%)" />							
+								</marker>
+					
+							</defs>
+						</svg>
+					</div>					
+				</section>
+
+				<section data-transition="fade-in">
+					<div>
+						<div style="display: grid; grid-template-columns: 1fr 1fr"><h3>Hybrid app</h3><h3>Nx app</h3></div>
+
+						<svg viewBox="0 0 200 120">
+							<line x1="99.5" y1="0" x2="100.5" y2="120" stroke="currentColor" stroke-width="1" />
+
+							<use xlink:href="#new-dashboard" x="135" y="1" />
+
+							<use xlink:href="#child-page" x="2" y="50" />
+							<use xlink:href="#child-page" x="35" y="70" />
+							<use xlink:href="#child-page" x="68" y="55" />
+
+							<use xlink:href="#child-page" x="105" y="62" />
+
+							<path class="link" d="M138,5 C30,5 20,10 16,52" marker-end="url(#arrow-head)" />
+							<path class="link" d="M140,7 C100,24 50,20 43,72" marker-end="url(#arrow-head)" />
+							<path class="link" d="M138,25 C130,25 85,25 83,57" marker-end="url(#arrow-head)" />
+							<path class="link" d="M140,30 C140,30 106,30 107,64" marker-end="url(#arrow-head)" />
+
+							<image xlink:href="images/cookie.png" width="40" height="20" x="80" y="20" />
+
+							<defs>
+								<g id="old-dashboard">
+									<use xlink:href="#page" />
+									<rect class="box" width="12" height="10" x="2" y="3" />
+									<rect class="box" width="12" height="10" x="16" y="3" />
+									<rect class="accordion" width="27" height="5" rx="2" ry="2" x="1.5" y="16" fill="url('#my-account-gradient')"; />
+									<rect class="accordion" width="27" height="5" rx="2" ry="2" x="1.5" y="21.5" fill="url('#my-account-gradient')"; />
+									<rect class="accordion" width="27" height="5" rx="2" ry="2" x="1.5" y="27" fill="url('#my-account-gradient')"; />
+								</g>
+								<g id="new-dashboard">
+									<use xlink:href="#page" />
+									<rect class="box" width="27" height="6" x="1.5" y="1.5" rx=".5" ry=".5" />
+									<rect class="box" width="27" height="6" x="1.5" y="8.5" rx=".5" ry=".5" />
+									<rect width="30" height="4"  y="16" fill="green" />
+									<rect class="box" width="12.5" height="14" x="1.5" y="22" rx=".5" ry=".5" />
+									<rect class="box" width="12.5" height="14" x="15.5" y="22" rx=".5" ry=".5" />
+								</g>
+
+								<g id="child-page">
+									<use xlink:href="#page" />
+									<image xlink:href="images/OzEnergy.png" width="25" height="15" y="10" x="2" />
+								</g>
+								<rect id="page" width="30" height="40" stroke-width=".5" fill="white" stroke="grey" />
+	
+								<linearGradient id="my-account-gradient" gradientTransform="rotate(90)">
+									<stop offset="20%" stop-color="#7fbe37" />
+									<stop offset="90%" stop-color="#59a920" />
+								</linearGradient>
+
+								<marker id="arrow-head" markerWidth="12" markerHeight="12" refX="0" refY="3" orient="auto" markerUnits="strokeWidth" viewBox="0 0 20 20">
+									<path d="M0,0 L0,6 L9,3 z" fill="hsl(100, 70%, 60%)" />							
+								</marker>
+					
+							</defs>
+						</svg>
+					</div>							
+				</section>
+
+				<section>
+					<ul style="list-style-type: '\2705'">
+						<li>🏗️Move to modern framework🏗️</li>
+						<li>🔥Burn the old codebase in a fire 🔥</li>
+					</ul>
+				</section>
+	
+				<section class="horizontal">
+					<img src="images/drupal.png" />
+					<img src="images/angular.svg" />
+				</section>
+
+				<section class="horizontal">
+					<img src="images/nativescript.svg" style="width: 50%" />
+					<img src="images/angular.svg" />
+				</section>
+
+				<section>
+					<img src="images/angular-elements.png" />
+				</section>
+
+				<section>
+					<code style="font-size: 2.5em">💩 <span class="fragment">-> 🎉💃💃💃🎉</span></code>
+					<h3 class="fragment">4 months</h3>
+					<div class="notes">
+						also developing new features at the same time
+					</div>
+				</section>
+
+				<section>
+					<h3>Lessons learned</h3>
+					<ul>
+						<li class="fragment">There is hope</li>
+						<li class="fragment">A stitch in time...</li>
+						<li class="fragment">Write good tests</li>
+					</ul>
+					<div class="notes">
+						even horrible apps can be fixed
+						everything will be legacy one day - put in the extra effort now
+					</div>
+				</section>
+	
 				<section data-background-image="images/We_Can_Do_It.jpg">
 					<style>
 						.reveal .card {
@@ -911,237 +1137,10 @@ angular.module('selfService',
 						<div style="margin-bottom: 30px;">https://ejzimmer.github.io/angular-upgrade-talk</div>
 						<div>@ErinJZimmer</div>
 					</div>
-					<div class="notes">
-						upgrading your AngularJS app absolutely is possibly, even if it does involve a few tears
-					</div>
 				</section>
 
 
 
-
-
-
-
-
-
-	
-					<section>
-						try and compile - at this point a bunch of stuff will probably break
-						script tags with globals -> import them
-					</section>
-	
-					<section>
-						Moving from gulp to Typescript means losing a bunch of gulp plugins - 
-						especially ng-template plugin. Need to manually populate the template cache
-					</section>
-	
-					<section>
-						legacy-templates.ts
-						-- wouldn't use this approach in a new app as you'd need to manually add templates as new components were built
-						-- in our case, we can just add the templates once, so it's ok
-						-- Can be automated. yay!
-					</section>
-	
-					<section>
-						Problems with tests I
-						- couldn't transpile tests due to dependency nightmare of single module + 
-						no es5 modules
-						- means we couldn't use import statements in anything we wanted to test
-	
-						Possible solutions, used here and previously
-						- don't run the tests. You're not planning to change this code anyway
-						- don't run the tests on those files. Reduce risk.
-						- don't import things. service hack.
-					</section>
-	
-					<section>
-						Problems with Tests II
-						- requests for templates
-						- make sure to add templates to template cache 
-						- I didn't automate this, but you should be able to
-					</section>
-	
-	
-					<section>
-						Maven & JSPs
-						-- index.html is served by index.jsp
-						-- the project structure is set up for Java development
-	
-						=> Move index.jsp to index.html 
-					</section>
-	
-	
-					<section>
-						<h4>JSP to HTML</h4>
-						-- another nasty bit
-						-- configuration injected into JSP
-						-- hacks & the downsides (code in index.html, late loaded scripts)
-					</section>
-	
-					<section>
-						<h3>Upgrading with ng-upgrade: bootstrapping the new app</h3>
-						-- remove ng-app
-						-- bootstrap in app.ts
-						platformBrowserDynamic().bootstrapModule(AppModule).then((platformRef) => {
-							const upgrade = platformRef.injector.get(UpgradeModule) as UpgradeModule;
-							upgrade.bootstrap(document.getElementById('legacy-app'), [ LegacyModule.name ], { strictDi: true });
-						});					
-					</section>
-	
-					<section>Congratulations, your app should now run</section>
-	
-					<section>
-						Things to remember 
-						-- replace your gulp plugins with explicit dependencies and template cache
-						-- create a single entry point for tsc and import all yer dependencies
-						-- tests. a problem.
-						-- configure ng-cli to deal with your project setup
-						-- bootstrap from Angular main.ts
-					</section>
-	
-	
-
-				<section>
-					<h2 class="problem">Bad User Experience</h2>
-				</section>
-	
-				<section>
-					<h2 class="solution">Good Experience for all Users</h2>
-				</section>
-
-
-				<section>
-					<h2>Problems</h2>
-					<ol>
-						<li>Security vulnerabilities</li>
-						<li>Developer experience</li>
-						<li class="fragment highlight-green">User experience</li>
-					</ol>
-				</section>
-	
-				<section>
-					originally designed by devs, design looking a bit tacky. 
-					Find an example of something dated to put in. 
-				</section>
-
-				<section>
-					no responsive design.
-					different templates for mobile/desktop. isDesktop()
-					example of how shit it looked on mid-sized devices
-				</section>
-
-				<section>
-					<img src="images/lighthouse.png" alt="">
-				</section>
-
-
-				<section>
-					<h3>Developing a hybrid app</h3>
-				</section>
-
-				<section>
-					<h4>Using new Angular components in your old AngularJS pages</h4>
-					-- downgrade.
-					-- easy as pie.
-					-- don't forget entry components
-				</section>
-
-				<section>
-					<h4>Using old AngularJS services in your new Angular components & services</h4>
-					-- upgrade.
-					-- also quite easy.
-					-- mocking for tests is a bit trickier
-				</section>
-
-				<section>
-					<h4>Using new Angular services in old AngularJS services etc</h4>
-					-- downgrade 
-					-- straightforward
-					-- less common use case
-				</section>
-
-				<section>
-					<h4>Using old Angular directives/components in new Angular components</h4>
-					-- need to upgrade 
-					-- will work for components 
-					-- will also work for directives that could be components - elements only, isolated scope etc
-					ss-accesible icon example?
-				</section>
-
-				<section>
-					-- downgrade component - tick 
-					-- upgrade service - tick-ish 
-					-- downgrade service - tick 
-					-- upgrade directive - tick-ish
-				</section>
-
-				<section>
-					<ul>
-						<li>security - tick</li>
-						<li>developer experience - tick</li>
-						<li>user experience</li>
-					</ul>
-					-- haven't done anything to make the app actually any better 
-					-- our analytics showed that it was no slower to load though
-				</section>
-
-				<section>
-					<h2>Our plan for the future </h2>
-				</section>
-
-				<section>
-					app is built around a hub & spoke model - central dashboard page + supporting pages
-					easy to separate out into independent units
-					also undertaking a redesign, giving us the opportunity to touch a lot of pages
-				</section>
-
-				<section>
-					New repo using nrwl nx
-					Any new pages go in the new repo. Updates to existing pages go in the old repo.
-					Idea is to eventually move everything from the old repo to the new one.
-				</section>
-
-				<section>
-					Each new page (or collection of related pages) is its own app in the new repo 
-					Shared library for common servies and components 
-					Also component library and ng-self-service, all nx repos
-				</section>
-
-				<section>
-					Pages can be developed independently, nicely encapsulated, potentially used in 
-					other apps. Some make sense as standalone, some as links from old app.
-					Ensure a common Angular version + shared dependencies.
-					Apps always built and deployed together - no versioning
-				</section>
-
-				<section>
-					communication between microfront ends
-				</section>
-
-				<section>
-					what we've found so far
-				</section>
-
-				<section>
-					<h2>Summary</h2>
-				</section>
-
-				<section>
-					It is vital that you upgrade any apps running < Angular 1.7, due to security concerns
-					This can be tricky, due to versions of dependencies, so try to do it soon and often
-				</section>
-
-				<section>
-					You should be looking at a path away from AngularJS altogether as it will go out of support
-					30/6/2021. which is not as far away as it sounds.
-					ng-upgrade offers a path to do this incrementally, even if your app isn't componentised 
-					with minimal hits to performance
-				</section>
-
-				<section>
-					exciting opportunities around new ways of building angular apps, potentially combining
-					micro front ends built in different frameworks and web components woop
-				</section>
 			</div>
 		</div>
 

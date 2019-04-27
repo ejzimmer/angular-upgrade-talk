@@ -161,7 +161,7 @@ body {
   color: var(--red); }
 
 .reveal .slides section .fragment.highlight-green.visible {
-  color: #17ff2e; }
+  color: var(--green); }
 
 .reveal .slides section .fragment.highlight-blue.visible {
   color: var(--blue); }
@@ -170,7 +170,7 @@ body {
   color: var(--red); }
 
 .reveal .slides section .fragment.highlight-current-green.current-fragment {
-  color: #17ff2e; }
+  color: var(--green); }
 
 .reveal .slides section .fragment.highlight-current-blue.current-fragment {
   color: var(--blue); }
