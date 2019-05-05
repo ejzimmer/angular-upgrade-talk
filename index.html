@@ -18,7 +18,7 @@
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
+			document.getElementsByTagName('head')[0].appendChild( link );
 		</script>
 
 		<style>
@@ -34,6 +34,9 @@
 
 			html.dim .backgrounds .present .slide-background-content {
 				filter: opacity(50%);
+			}
+			html.dimmer .backgrounds .present .slide-background-content {
+				filter: opacity(50%) contrast(.5);
 			}
 
 			.notes {
@@ -58,7 +61,10 @@
 				.reveal .slides > section > section.present.top-align,
 				.reveal .slides section.top-align {
 					justify-content: flex-start;
-				}
+			}
+			.reveal .slides > section.horizontal.spread {
+				justify-content: space-around;
+			}
 
 			.reveal section code, .reveal section .text {
 				font-size: 60px;
@@ -87,12 +93,6 @@
 				background-color: rgba(3, 3, 3, .2);
 				padding: .8em;
 				border-radius: 5px;
-			}
-
-			.fragment.highlight-blue.visible .hljs-string,
-					pre code .fragment.highlight-blue.visible {
-				color: var(--blue);
-				background: var(--background-blue);
 			}
 
 			.reveal .slides section .fragment.dim, .reveal .slides section .fragment.strikethrough {
@@ -124,7 +124,7 @@
 			}
 
 			.reveal section ul {
-				list-style-type: '\1F449';
+				list-style-type: '\1F680';
 			}
 
 			.reveal section ul li {
@@ -136,8 +136,12 @@
 				font-family: fira;
 			}
 
-			img.contrast {
-				filter: drop-shadow(2px 2px 3px hsla(0, 0%, 100%, .4))
+			.fragment.highlight-current-blue.visible {
+				color: #999;
+			}
+			.fragment.highlight-blue.visible * {
+				color: var(--blue);
+				background: #666;
 			}
 
 		</style>
@@ -148,25 +152,30 @@
 				<section>
 					<h1>Updating your AngularJS App</h1>
 					<div style="font-size: 2em">(without the tears)</div>
+					<div class="attribution">@ErinJZimmer</div>
 
 					<div class="notes">
 						AngularJS vs Angular
 					</div>
 				</section>
+
+				<section>
+					<h3 class="fragment">You can upgrade your app</h3>
+					<h3 class="fragment">You <i>should</i> upgrade your app</h3>
+				</section>
+
 				<section>
 					<style>
 						#shine-logo {
-							box-shadow: 0 0 80px 10px #3A393B;
-							width: 50%;
-							padding-right: 40%;
-						}
+							width: min-content;
+							align-self: flex-end;
+							justify-self: flex-end;
+							margin-right: -50px;
+						}					
 					</style>
-					<img id="shine-logo" src="images/shine-solutions-logo-dark.png" alt="shine solutions">
-					<img src="images/OzEnergy.png" style="margin-left: 50%" />
-					<div class="notes">
-						- senior developer & thought leader at Shine Solutions
-						- consulting at a major Australian electricity retailer who decline to be named
-						- which is a shame, because I think we've ended up with something they should be proud of
+					<div style="display: grid; max-height: 90%;">
+						<img id="shine-logo" src="images/shine-solutions-logo-dark.png">
+						<img src="images/OzEnergy.png" style="grid-area: 2 / 2; align-self: flex-start; margin-top: -50px; margin-left: -30px" />		
 					</div>
 				</section>
 
@@ -188,14 +197,18 @@
 				</section>
 
 				<section>
-					<img src="images/no-encapsulation.png" alt="">
+					<pre><code style="font-size: 1.2em;">
+$scope.parentCtrl.loadDataForSection = function (section) {
+  ...
+}
+					</code></pre>
 				</section>
 
 				<section>
-					<img src="images/javascript-idioms.png" alt="">
-					<div class="notes">
-						What was special: EA recognised issue and decided to fix it
-					</div>
+					<pre><code style="font-size: 1.2em">
+resp.data instanceof Object && 
+  typeof resp.data.oamErrorCode != "undefined"			
+					</code></pre>
 				</section>
 
 				<section>
@@ -219,6 +232,7 @@
 							background: hsla(0, 0%, 100%, 0.12);
 							padding: 1em;
 							box-shadow: 1px 1px 8px hsla(0, 0%, 0%, .4);
+							width: 100%;
 						}
 					</style>
 					<img id="dependency-check" src="images/dependency-check.svg" alt="">
@@ -353,7 +367,7 @@ expect(phone.label).toBe('Mobile (2)');
 				</section>
 
 				<section>
-					<h3>Break the build<br> for<br> security vulnerabilities</h3>
+					<h3 style="color: var(--red)">Break the build<br> for<br> security vulnerabilities</h3>
 					<div class="notes">
 						we do it using the dependency check plugin mentioned earlier 
 						but there's an even easier way
@@ -361,7 +375,7 @@ expect(phone.label).toBe('Mobile (2)');
 				</section>
 
 				<section>
-					<img style="width: 80vw;" class="contrast"  src="images/sonarqube.png">
+					<img style="width: 80vw;"  src="images/sonarqube.svg">
 				</section>
 
 				<section data-background-image="images/crying.jpg" data-state="dim">
@@ -460,15 +474,15 @@ carbon-neutral                 icon                           profile</span>
 				</section>
 
 				<section>
-					<div class="text">Everything in global state</div>
+					<div class="text">Everything in global state 🌏</div>
 				</section>
 
-				<section data-background-image="images/birthday.jpg" data-state="dim">
+				<section data-background-image="images/birthday.jpg" data-state="dimmer">
 					<h2>Better Developer Experience</h2>
 				</section>
 
 				<section>
-					<ul>
+					<ul style="text-align: center">
 						<li style="list-style-type: none" class="fragment">🏗️Move to modern framework🏗️</li>
 						<li style="list-style-type: none" class="fragment">🔥Burn the old codebase in a fire 🔥</li>
 					</ul>
@@ -562,13 +576,9 @@ carbon-neutral                 icon                           profile</span>
 
 				<section>
 					<ul class="text">
-						<li class="fragment highlight-blue">Valid HTML</li>
+						<li class="fragment highlight-current-blue">Valid HTML</li>
 						<li>Explicit dependencies</li>
 					</ul>
-					<div class="notes">
-						-- Angular converts your HTML into JavaScript and back again 
-						-- Not forgiving like the browser - HTML must be well-formed and valid
-					</div>	
 				</section>
 
 				<section>
@@ -582,8 +592,9 @@ carbon-neutral                 icon                           profile</span>
 
 				<section>
 					<ul class="text">
+						<li class="complete">At least Angular 1.6</li>
 						<li class="complete">Valid HTML</li>
-						<li class="fragment highlight-blue">Explicit dependencies</li>
+						<li style="color: var(--blue)">Explicit dependencies</li>
 					</ul>
 					<div class="notes">
 						Angular dependency injection requires that you pass the name of your dependencies
@@ -593,9 +604,9 @@ carbon-neutral                 icon                           profile</span>
 				<section>
 					<pre><code data-noescape>
 var myService = [
- <span class="fragment highlight-blue">'$http', 
- '$q',</span>
- function (<span class="fragment highlight-blue">$http, $q</span>) { ... } 
+ <span class="fragment highlight-blue" data-fragment-index="0">'$http'</span>, 
+ <span class="fragment highlight-blue" data-fragment-index="0">'$q'</span>,
+ function (<span class="fragment highlight-blue" data-fragment-index="1">$http, $q</span>) { ... } 
 ];
 					</code></pre>
 					<div class="notes">
@@ -637,8 +648,10 @@ var myService =
 					<div>source files <span class="right-arrow"></span> built file <span class="right-arrow"></span> annotated built file</div>
 				</section>
 
-				<section>
-					source files 🔄 annotated files 
+				<section class="horizontal spread">
+					<div style="font-size: 1.5em">source files</div>
+					<div style="font-family: fira; width: 1em">-> &lt;-</div>
+					<div style="font-size: 1.5em;">annotated files</div>
 				</section>
 
 				<section>
@@ -665,7 +678,7 @@ var myService =
 					</div>
 				</section>
 
-				<section data-background-image="images/shipping-containers.jpeg" data-state="dim">
+				<section data-background-image="images/shipping-containers.jpeg" data-state="dimmer">
 					<h3>Setup ES Modules</h3>
 				</section>
 
@@ -761,7 +774,6 @@ import './components/scroll-to-top/scroll-to-top-service';
 
 				<section>
 					<code class="bash">find . -type f -iname '*.js' ! -iname '*_test.js' > legacy-imports.js</code>
-					<code class="fragment"></code>
 					<div class="notes">
 						find & replace regex or multicursor or whatever in IDE -- demo!
 					</div>
@@ -812,12 +824,14 @@ angular.module('selfService',
 				</section>
 		
 				<section>
-					<pre style="font-size: 60px;">
+					<pre style="font-size: 60px;" data-noescape="">
 -- app-name
+  <span class="fragment" data-fragment-index="1" style="color: var(--red)">-- package.json</span>
   -- src
     -- main
       -- java 
-      -- webapp  
+      -- webapp
+        <span class="fragment" data-fragment-index="0" style="color: var(--blue)">-- Angular app</span>
     -- test
 					</pre>
 				</section>
@@ -869,6 +883,10 @@ angular.module('selfService',
 					</div>	
 				</section>
 
+				<section>
+					<h4>upgrade as usual...</h4>
+				</section>
+
 				<section data-background-image="images/geometry.jpg" data-background-position="top" data-state="dim">
 					<h3>Writing Angular</h3>
 					<div class="notes">
@@ -878,10 +896,10 @@ angular.module('selfService',
 
 				<section>
 					<ul style="list-style-type: '\2705'">
-						<li>Angular component in AngularJS</li>
-						<li>AngularJS service in Angular</li>
-						<li>Angular service in AngularJS</li>
-						<li style="list-style-type: '\1F937'">AngularJS directive in Angular</li>
+						<li class="fragment">Angular component in AngularJS</li>
+						<li class="fragment">AngularJS service in Angular</li>
+						<li class="fragment">Angular service in AngularJS</li>
+						<li class="fragment" style="list-style-type: '\1F937'">AngularJS directive in Angular</li>
 					</ul>
 				</section>
 
@@ -900,7 +918,7 @@ angular.module('selfService',
 						<li class="fragment">controller & template</li>
 						<li class="fragment">isolate scope</li>
 						<li class="fragment"><code style="font-size: inherit;">bindToController</code></li>
-						<li class="fragment">NO <code style="font-size: inherit">compile</code> or <code style="font-size: inherit">replace</code></li>
+						<li class="fragment">NO <code style="font-size: inherit">compile</code> or <code style="font-size: inherit">link</code></li>
 					</ul>
 				</section>
 
@@ -927,7 +945,7 @@ angular.module('selfService',
 
 				<section>
 					<h2>microfrontends</h2>
-					<img src="images/nx-logo.png" class="contrast" style="width: 50vw">
+					<img src="images/nx-logo.png" style="width: 50vw; background: hsla(300, 50%, 100%, .1); padding: 40px; border-radius: 10px;">
 				</section>
 
 				<section data-transition="fade-out">
@@ -1098,8 +1116,8 @@ angular.module('selfService',
 				</section>
 
 				<section>
-					<code style="font-size: 2.5em">💩 <span class="fragment">-> 🎉💃💃💃🎉</span></code>
-					<h3 class="fragment">4 months</h3>
+					<code style="font-size: 2.5em">💩 -> 🎉💃💃💃🎉</code>
+					<h3>4 months</h3>
 					<div class="notes">
 						also developing new features at the same time
 					</div>
@@ -1115,6 +1133,10 @@ angular.module('selfService',
 					<div class="notes">
 						even horrible apps can be fixed
 						everything will be legacy one day - put in the extra effort now
+					</div>
+					<div class="notes">
+						You should be looking at a path away from AngularJS altogether as it will go out of support
+						30/6/2021. which is not as far away as it sounds.
 					</div>
 				</section>
 	
