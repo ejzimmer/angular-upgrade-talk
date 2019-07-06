@@ -152,7 +152,7 @@
 				<section>
 					<h1>Updating your AngularJS App</h1>
 					<div style="font-size: 2em">(without the tears)</div>
-					<div class="attribution">@ErinJZimmer</div>
+					<div class="attribution" style="font-size: 1em; padding: .5em">@ErinJZimmer</div>
 
 					<div class="notes">
 						AngularJS vs Angular
@@ -160,29 +160,40 @@
 				</section>
 
 				<section>
-					<h3 class="fragment">You can upgrade your app</h3>
-					<h3 class="fragment">You <i>should</i> upgrade your app</h3>
+					<h3 class="fragment">You should upgrade your app</h3>
+					<h3 class="fragment">You <i>can</i> upgrade your app</h3>
 				</section>
 
 				<section>
 					<style>
+						#intro {
+							display: grid;
+							max-height: 90%;
+							grid-template-rows: min-content 1fr 1fr;
+							grid-template-columns: 1.5fr 1fr;
+						}
 						#shine-logo {
-							width: min-content;
-							align-self: flex-end;
-							justify-self: flex-end;
-							margin-right: -50px;
-						}					
+							grid-row: 1 / span 2;
+							grid-column-start: 2;
+							justify-self: flex-start;
+						}
+						#shine-logo img {
+							width: 100%;
+						}
+						#oz-energy {
+							grid-column: 1 / span 2;
+							justify-self: center;
+							margin-top: -30px;
+						}
 					</style>
-					<div style="display: grid; max-height: 90%;">
-						<div>
-							<div style="text-align: left; margin-bottom: 1em;">@ErinJZimmer</div>
-							<ul>
-								<li>Google developer expert</li>
-								<li>Mozilla tech speaker</li>
-							</ul>
-						</div>
+					<div id="intro">
+						<div style="text-align: left; margin-bottom: .75em">@ErinJZimmer</div>
 						<img id="shine-logo" src="images/shine-solutions-logo-dark.png">
-						<img src="images/OzEnergy.png" class="fragment" style="grid-area: 2 / 2; align-self: flex-start; margin-top: -50px; margin-left: -30px" />		
+						<ul>
+							<li>Google developer expert</li>
+							<li>Mozilla tech speaker</li>
+						</ul>
+						<img id="oz-energy" src="images/OzEnergy.png" class="fragment" />
 					</div>
 				</section>
 
@@ -214,7 +225,7 @@ $scope.parentCtrl.loadDataForSection = function (section) {
 				<section>
 					<pre><code style="font-size: 1.2em">
 resp.data instanceof Object && 
-  typeof resp.data.oamErrorCode != "undefined"			
+  typeof resp.data.oamErrorCode != "undefined"
 					</code></pre>
 				</section>
 
@@ -275,6 +286,11 @@ resp.data instanceof Object &&
 					<h2>Improved Security</h2>
 				</section>
 
+				<section>
+					<div style="font-size: 8em">💰</div>
+					<div class="notes">how did we convince business?</div>
+				</section>
+
 				<section class="horizontal" style="justify-content: space-around">
 					<img src="images/upgrade-all-the-things.png" alt="">
 					<ul>
@@ -298,7 +314,7 @@ resp.data instanceof Object &&
 				</section>
 
 				<section>
-					<pre><code class="html">&lt;datepicker
+					<pre><code class="html" style="overflow: hidden; font-size: 30px">&lt;datepicker
   ng-model="objDate"
   starting-day="1"
   format-month="MMM"
@@ -308,7 +324,7 @@ resp.data instanceof Object &&
   data-datepickertype="inline"&gt;
 &lt;/datepicker&gt;
 					</code></pre>
-					<pre class="fragment"><code class="html">&lt;div
+					<pre class="fragment"><code class="html" style="font-size: 30px">&lt;div
   uib-datepicker 
   ng-model="$ctrl.date" 
   datepicker-options="$ctrl.opts"&gt;
@@ -339,13 +355,13 @@ resp.data instanceof Object &&
 </code></pre>
 				</section>
 
-				<section>
-<pre><code class="js" style="font-size: 40px;">
+				<section class="left">
+<pre><code class="js" style="font-size: 38px">
 expect(ctrl.func1).toHaveBeenCalled();
-expect(ctrl.func2).toHaveBeenCalled();		 
+expect(ctrl.func2).toHaveBeenCalled();
 </code></pre>
 
-<pre class="fragment"><code class="js" style="font-size: 40px;">expect(ctrl.phoneTypes).toContain('MOBILE');
+<pre class="fragment"><code class="js" style="font-size: 38px;">expect(ctrl.phoneTypes).toContain('MOBILE');
 expect(phone.label).toBe('Mobile (2)');	 
 </code></pre>
 					<div class="notes">
@@ -413,7 +429,7 @@ angular.forEach(this.accounts,
 				</section>
 
 				<section>
-<pre><code class="js" style="font-size: inherit">
+<pre><code class="js" style="font-size: inherit; overflow: hidden">
 var modules = [
  modulesPath + "jquery/dist/jquery.js",
  modulesPath + "autofill-event/autofill-event.js",
@@ -450,32 +466,32 @@ var modules = [
 				</section>
 
 				<section>
-					<pre><code class="bash" data-noescape>
+					<pre><code class="bash" data-noescape style="overflow: hidden">
 <span style="color: teal">app</span><span style="color: hsl(344, 98%, 34%)">|</span><span style="color: hsl(100, 50%, 40%)">develop</span> <span style="color: teal">⇒</span> ls components
-<span style="font-size: 20px">_components.scss               card-mask                      identification-fields          qas
-accessible                     checkbox                       is-desktop                     qt2
-accordion-panel                concession-card                is-logged-in                   quote
-account-balance                confirmation-modal             life-support                   return-home-button
-account-heading                constants                      link                           rewards
-account-holders                contact-details                live-chat                      rpo
-account-payment-plan           creditcard-type                location-state                 scroll-to-top
-account-premise-trim           currency                       logging                        session-timeout
-account-select                 date-entry                     login                          show-back-button
-account-type                   date-range-filter              login-form                     sidebar-modal
-accounts                       device-detection               logout                         spaceless-filter
-address-concat                 direct-debit                   maintenance                    spinnable
-address-input                  direct-debit-form              max-value                      street-types
-admin                          direct-debit-form-rpo          mhbills                        token-auth-interceptor
-agent                          double-click                   min-value                      upsell-panel
-anchor-smooth-scroll           eaexpiry-filter                movers                         usage
-authorization-http-interceptor error-http-interceptor         now                            usages-modal
-autofill-event                 events                         oam                            validation
-bill-header                    federation                     omniture                       velocity-validator
-blank-string-filter            fibre                          password-reset                 view-more-less
-bundle                         filtered-dropdown              payment                        web-chat
-button-with-icon               focus-input                    phone-number-input             when-account-loaded
-calendar-countdown             form-submit                    phone-numbers                  words-filter
-capitalize                     forms                          plan-details                   yes-or-no-modal
+<span style="font-size: 20px">_components.scss               card-mask
+accessible                     checkbox                       is-desktop
+accordion-panel                concession-card                is-logged-in      
+account-balance                confirmation-modal             life-support      
+account-heading                constants                      link              
+account-holders                contact-details                live-chat         
+account-payment-plan           creditcard-type                location-state    
+account-premise-trim           currency                       logging           
+account-select                 date-entry                     login             
+account-type                   date-range-filter              login-form        
+accounts                       device-detection               logout            
+address-concat                 direct-debit                   maintenance       
+address-input                  direct-debit-form              max-value         
+admin                          direct-debit-form-rpo          mhbills           
+agent                          double-click                   min-value         
+anchor-smooth-scroll           eaexpiry-filter                movers            
+authorization-http-interceptor error-http-interceptor         now               
+autofill-event                 events                         oam               
+bill-header                    federation                     omniture          
+blank-string-filter            fibre                          password-reset    
+bundle                         filtered-dropdown              payment           
+button-with-icon               focus-input                    phone-number-input
+calendar-countdown             form-submit                    phone-numbers     
+capitalize                     forms                          plan-details      
 carbon-neutral                 icon                           profile</span>
 					</code></pre>
 				</section>
@@ -574,6 +590,19 @@ carbon-neutral                 icon                           profile</span>
 					</div>
 				</section>
 
+				<section>
+					<h2>Preparation</h2>
+					<ul>
+						<li>Follow the AngularJS Style Guide</li>
+						<li>Use a Module Loader</li>
+						<li>Migrate to TypeScript</li>
+						<li>Use Component Directives</li>
+					</ul>
+					<svg viewBox="0 0 100 100" style="position: fixed; height: 80%" class="fragment">
+						<path d="M20 2 l30 34  30 -34  15 15  -34 30  34 30  -15 15  -30 -34  -30 34  -15 -15  34 -30  -34 -30Z" stroke-width="2" stroke="white" stroke-linejoin="round" fill="#992222" />
+					</svg>
+				</section>
+	
 				<section data-background-image="images/marie-kondo.jpg" data-state="dim">
 					<h1>Tidying Up</h1>
 					<div class="notes">
@@ -581,10 +610,11 @@ carbon-neutral                 icon                           profile</span>
 					</div>
 				</section>
 
+
 				<section>
 					<ul class="text">
 						<li class="fragment highlight-current-blue">Valid HTML</li>
-						<li>Explicit dependencies</li>
+						<li>Strict dependency injection</li>
 					</ul>
 				</section>
 
@@ -600,19 +630,29 @@ carbon-neutral                 icon                           profile</span>
 				<section>
 					<ul class="text">
 						<li class="complete">Valid HTML</li>
-						<li style="color: var(--blue)">Explicit dependencies</li>
+						<li style="color: var(--blue)">Strict dependency injection</li>
 					</ul>
 					<div class="notes">
 						Angular dependency injection requires that you pass the name of your dependencies
 					</div>
 				</section>
+
+				<section>
+					<pre><code class="js">
+var myService = function ($http, $q) { 
+	... 
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<pre><code>var x=function(a,b){ ... }</code></pre>
+				</section>
 	
 				<section>
-					<pre><code data-noescape>
-var myService = [
- <span class="fragment highlight-blue" data-fragment-index="0">'$http'</span>, 
- <span class="fragment highlight-blue" data-fragment-index="0">'$q'</span>,
- function (<span class="fragment highlight-blue" data-fragment-index="1">$http, $q</span>) { ... } 
+					<pre><code>
+var myService = ['$http', '$q',
+ function ($http, $q) { ... } 
 ];
 					</code></pre>
 					<div class="notes">
@@ -629,38 +669,6 @@ var myService = [
 				</section>
 
 				<section>
-						<pre><code class="fragment strikethrough" data-fragment-index="0">
-var myService = [
-  '$http', 
-  '$q',
-  function ($http, $q) { ... } 
-];</code></pre>
-						<pre><code class="fragment" data-fragment-index="0">
-var myService = 
-	function ($http, $q) { ... } 
-						</code></pre>
-																							
-				</section>
-
-				<section>
-					<h2>Manual annotation</h2>
-					<div class="notes">
-						-- bit inconvenient, but the idea here is that we're not going to write AngularJS code going forward
-						-- run ng-annotate against your source files, rather than build files
-					</div>
-				</section>
-
-				<section>
-					<div>source files <span class="right-arrow"></span> built file <span class="right-arrow"></span> annotated built file</div>
-				</section>
-
-				<section class="horizontal spread">
-					<div style="font-size: 1.5em">source files</div>
-					<div style="font-family: fira; width: 1em">-> &lt;-</div>
-					<div style="font-size: 1.5em;">annotated files</div>
-				</section>
-
-				<section>
 					<style>
 						.reveal section code.bash {
 							font-size: 30px;
@@ -671,8 +679,12 @@ var myService =
 							margin-bottom: 60px;
 						}
 					</style>
-					<code class="bash">ng-annotate -a my-service.js -o my-service.js</code>
-					<code class="bash fragment">find . -type f -iname '*.js' -exec ng-annotate -a {} -o {} \;</code>
+					<code class="bash" data-noescape>
+						<span class="fragment highlight-current-green">find . -type f -iname '*.js'</span>
+						<span class="fragment highlight-current-green"> -exec ng-annotate</span>
+						<span class="fragment highlight-current-green">-a {}</span>
+						<span class="fragment highlight-current-green"> -o {}</span>
+						<span class="fragment highlight-current-green"> \;</span></code>
 				</section>
 
 				<section data-background-image="images/switch.jpg" data-state="dim">
@@ -689,7 +701,7 @@ var myService =
 				</section>
 
 				<section>
-					<pre><code class="js">
+					<pre><code class="js" style="overflow: hidden; font-size: .8em">
 var modules = [
  modulesPath + "jquery/dist/jquery.js",
  modulesPath + "autofill-event/autofill-event.js",
@@ -726,7 +738,7 @@ var modules = [
 				</section>
 
 				<section>
-					<pre><code>
+					<pre><code style="overflow: hidden">
 import 'angular';
 import 'jquery';
 import 'matchmedia-ng';
@@ -739,14 +751,6 @@ import 'angular-cookies';
 import 'ng-csv';
 import 'ng-idle';
 import 'ng-joyride';
-import 'shine-ui/src/sidebar/sidebar-directive';
-import 'shine-ui/src/storage-service';
-import 'angular-ui-bootstrap';
-import 'angular-ui-router';
-import 'angular-ui-router-breadcrumbs/dist/angular-ui-router-breadcrumbs';
-import 'angular-ui-swiper/dist/angular-ui-swiper';
-import 'angular-nvd3';
-import 'spin.js';
 					</code></pre>
 					<div class="notes">
 						-- use import 'module-name' syntax to import all your node module dependencies
@@ -759,7 +763,7 @@ import 'spin.js';
 				</section>
 
 				<section>
-					<pre><code>
+					<pre><code style="font-size: 1em">
 import './components/carbon-neutral/carbon-neutral-service';
 import './components/omniture/omniture-service';
 import './components/max-value/max-value-directive';
@@ -779,7 +783,11 @@ import './components/scroll-to-top/scroll-to-top-service';
 				</section>
 
 				<section>
-					<code class="bash">find . -type f -iname '*.js' ! -iname '*_test.js' > legacy-imports.js</code>
+					<code class="bash">
+						<span class="fragment highlight-current-green">find . -type f -iname '*.js'</span>
+						<span class="fragment highlight-current-green">! -iname '*_test.js'</span><br>
+						<span class="fragment highlight-current-green">&gt; legacy-imports.js</span>
+					</code>
 					<div class="notes">
 						find & replace regex or multicursor or whatever in IDE -- demo!
 					</div>
@@ -790,10 +798,8 @@ import './components/scroll-to-top/scroll-to-top-service';
 				</section>
 
 				<section>
-						<pre><code>	
-angular.module('selfService', 
-  [ 'ui-bootstrap', ... ]);
-						</code></pre>
+						<pre><code>angular.module('selfService',
+  [ 'ui-bootstrap', ... ]);</code></pre>
 					</section>
 	
 
@@ -805,7 +811,7 @@ angular.module('selfService',
 					<pre><code data-noescape>
 <span class="fragment">import 'legacy-imports';</span>
 
-<span class="fragment">declare const angular: any;</span>
+<span class="fragment">declare const angular: IAngularStatic;</span>
 
 angular.module('selfService', 
 	[ 'ui-bootstrap', ... ]);
@@ -835,11 +841,10 @@ angular.module('selfService',
   <span class="fragment" data-fragment-index="1" style="color: var(--red)">-- package.json</span>
   -- src
     -- main
-      -- java 
+      -- java
       -- webapp
         <span class="fragment" data-fragment-index="0" style="color: var(--blue)">-- Angular app</span>
-    -- test
-					</pre>
+    -- test</pre>
 				</section>
 
 				<section>
@@ -874,7 +879,6 @@ angular.module('selfService',
         <span class="highlight">"self-service-app/src/main/webapp/src/reference-data"</span>
       ],
       "styles": [<span class="highlight">"self-service-app/src/main/webapp/src/styles.scss"</span>],
-      "scripts": [node_modules/angular/angular.js", "node_modules/jquery/dist/jquery.min.js"]
 					</pre>
 					<div class="notes">
 						angular.json
@@ -910,10 +914,6 @@ angular.module('selfService',
 				</section>
 
 				<section>
-					You can upgrade your directive<br> if it could be a component
-				</section>
-
-				<section>
 						<pre><code class="js" style="font-size: 1">angular.component('my-legacy-component', 
 			function () {...})</code></pre>
 				</section>
@@ -927,20 +927,6 @@ angular.module('selfService',
 						<li class="fragment">NO <code style="font-size: inherit">compile</code> or <code style="font-size: inherit">link</code></li>
 					</ul>
 				</section>
-
-				<section data-background-image="images/test.jpg" data-state="dim">
-					<h2>Testing</h2>
-					<div class="notes">
-						we had some issues getting our old tests to work under new build system
-						- previously testing entire built application
-						- now testing individual files, because TypeScript + karma = sadface
-					</div>
-				</section>
-
-				<section>
-					<div class="text">Do you really need<br> AngularJS tests?</div>
-				</section>
-
 
 				<section data-background-image="images/New_New_York_Cityscape.webp" data-state="dim">
 					<h2>The future</h2>
@@ -1132,9 +1118,9 @@ angular.module('selfService',
 				<section>
 					<h3>Lessons learned</h3>
 					<ul>
-						<li class="fragment">There is hope</li>
-						<li class="fragment">A stitch in time...</li>
 						<li class="fragment">Write good tests</li>
+						<li class="fragment">A stitch in time...</li>
+						<li class="fragment">There is hope!</li>
 					</ul>
 					<div class="notes">
 						even horrible apps can be fixed
