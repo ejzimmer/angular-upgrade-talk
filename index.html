@@ -687,6 +687,17 @@ var myService = ['$http', '$q',
 						<span class="fragment highlight-current-green"> \;</span></code>
 				</section>
 
+				<section>
+					<pre><code>
+var myService = ['$http', '$q',
+ function ($http, $q) { ... } 
+];
+					</code></pre>
+					<div class="notes">
+						-- this turns out to be quite tedious, so some clever person came up with a way to do it automatically
+					</div>
+				</section>
+
 				<section data-background-image="images/switch.jpg" data-state="dim">
 					<h2>Switching to TypeScript</h2>
 					<div class="notes">
@@ -793,35 +804,126 @@ import './components/scroll-to-top/scroll-to-top-service';
 					</div>
 				</section>
 
+				<section data-transition="fade-out">
+					<pre><code style="font-size: 1em">
+./components/carbon-neutral/carbon-neutral-service
+./components/omniture/omniture-service
+./components/max-value/max-value-directive
+./components/login-form/login-form-directive
+./components/form-submit/form-create-submit-directive
+./components/form-submit/form-submit-directive
+./components/show-back-button/show-back-button-service
+./components/date-entry/date-entry-directive
+./components/eaexpiry-filter/eaexpiry
+./components/calendar-countdown/calendar-countdown-directive
+./components/scroll-to-top/scroll-to-top-service
+					</code></pre>
+					<div class="notes">
+						-- exactly the same approach, except this time it is automatable, because you want to include all 
+							 your JavaScript files (except test files, and you've used a sensible naming convention for those, of course)
+					</div>
+				</section>
+
+				<section data-transition="fade">
+					<pre><code style="font-size: 1em">
+import './components/carbon-neutral/carbon-neutral-service';
+import './components/omniture/omniture-service';
+import './components/max-value/max-value-directive';
+import './components/login-form/login-form-directive';
+import './components/form-submit/form-create-submit-directive';
+import './components/form-submit/form-submit-directive';
+import './components/show-back-button/show-back-button-service';
+import './components/date-entry/date-entry-directive';
+import './components/eaexpiry-filter/eaexpiry';
+import './components/calendar-countdown/calendar-countdown-directive';
+import './components/scroll-to-top/scroll-to-top-service';
+					</code></pre>
+					<div class="notes">
+						-- exactly the same approach, except this time it is automatable, because you want to include all 
+							 your JavaScript files (except test files, and you've used a sensible naming convention for those, of course)
+					</div>
+				</section>
+
+				<section data-transition="fade-in">
+					<pre><code style="font-size: .8em; overflow: hidden">
+import 'angular';
+import 'jquery';
+import 'matchmedia-ng';
+import 'angular-shims-placeholder';
+import 'angular-animate';
+import 'angular-sanitize';
+import 'angular-touch';
+import 'angular-aria';
+import 'angular-cookies';
+import 'ng-csv';
+import 'ng-idle';
+import 'ng-joyride';
+						
+import './components/carbon-neutral/carbon-neutral-service';
+import './components/omniture/omniture-service';
+import './components/max-value/max-value-directive';
+import './components/login-form/login-form-directive';
+import './components/form-submit/form-create-submit-directive';
+import './components/form-submit/form-submit-directive';
+import './components/show-back-button/show-back-button-service';
+import './components/date-entry/date-entry-directive';
+import './components/eaexpiry-filter/eaexpiry';
+import './components/calendar-countdown/calendar-countdown-directive';
+import './components/scroll-to-top/scroll-to-top-service';
+					</code></pre>
+					<div class="notes">
+						-- exactly the same approach, except this time it is automatable, because you want to include all 
+							 your JavaScript files (except test files, and you've used a sensible naming convention for those, of course)
+					</div>
+				</section>
+
+
 				<section data-background-image="images/station-gates.jpg" data-state="dim">
-					<h3>Create TypeScript Entry Point</h3>
+					<h3>Create App Entry Point</h3>
 				</section>
 
 				<section>
+						<div style="margin-bottom: 50px">app.js</div>
 						<pre><code>angular.module('selfService',
   [ 'ui-bootstrap', ... ]);</code></pre>
 					</section>
 	
+					<section data-transition="fade-in">
+							<pre><code style="font-size: .8em; overflow-x: hidden">
+		import 'angular';
+		import 'jquery';
+		import 'matchmedia-ng';
+		import 'angular-shims-placeholder';
+		import 'angular-animate';
+		import 'angular-sanitize';
+		import 'angular-touch';
+		import 'angular-aria';
+		import 'angular-cookies';
+		import 'ng-csv';
+		import 'ng-idle';
+		import 'ng-joyride';
 
-				<section>
-					<code>app.js -> app.ts</code>
-				</section>
+		import './app.js';
+								
+		import './components/carbon-neutral/carbon-neutral-service';
+		import './components/omniture/omniture-service';
+		import './components/max-value/max-value-directive';
+		import './components/login-form/login-form-directive';
+		import './components/form-submit/form-create-submit-directive';
+		import './components/form-submit/form-submit-directive';
+		import './components/show-back-button/show-back-button-service';
+		import './components/date-entry/date-entry-directive';
+		import './components/eaexpiry-filter/eaexpiry';
+		import './components/calendar-countdown/calendar-countdown-directive';
+		import './components/scroll-to-top/scroll-to-top-service';
 
-				<section>
-					<pre><code data-noescape>
-<span class="fragment">import 'legacy-imports';</span>
-
-<span class="fragment">declare const angular: IAngularStatic;</span>
-
-angular.module('selfService', 
-	[ 'ui-bootstrap', ... ]);
-					</code></pre>
-					<div class="notes">
-						import all your imports!
-						at this point, if you're not using Babel, your build is going to break 
-						either set up TSC, or press on!
-					</div>
-				</section>
+		export const legacyApp = angular.module('selfService');
+							</code></pre>
+							<div class="notes">
+								-- exactly the same approach, except this time it is automatable, because you want to include all 
+									 your JavaScript files (except test files, and you've used a sensible naming convention for those, of course)
+							</div>
+						</section>		
 
 				<section data-background-image="images/angular-cli.png" data-state="dim">
 					<h2>Angular CLI</h2>
